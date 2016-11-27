@@ -9,11 +9,28 @@ import Data.Aeson
 import Data.ByteString.Lazy (ByteString)
 import GHC.Generics (Generic)
 
-data Request
-  = ConnectionRequest Text
-  | GameStartRequest
+import Hanabi.Types
+
+data Message
+  = Connect Text
+  | Discard Card
+  | HintColor Color
+  | HintNumber Number
+  | Play Card
   deriving (Show, Eq, Ord, Generic)
 
-instance ToJSON Request where
-  toJSON (ConnectionRequest t) =
-    object ["type" .= ("CONNECTION_REQUEST" :: Text), "name" .= t]
+instance ToJSON Message where
+  toJSON msg = object (msgType msg : payload msg)
+
+payload
+  :: KeyValue t
+  => Message -> [t]
+payload (Connect name) = ["name" .= name]
+
+msgType
+  :: KeyValue kv
+  => Message -> kv
+msgType msg = "type" .= getType msg
+  where
+    getType :: Message -> Text
+    getType (Connect _) = "CONNECTION_REQUEST"

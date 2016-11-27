@@ -37,6 +37,10 @@ resolver: lts-7.10
 # will not be run. This is useful for tweaking upstream packages.
 packages:
 - '.'
+- location:
+    git: git@github.com:TimoFreiberg/hanabi-core
+    commit: 8c9c05929965aca3e9fa41869bcd400c8e4f712c
+  extra-dep: true
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)
 extra-deps: []

@@ -1,4 +1,4 @@
-name:                hanabi-rest
+name:                hanabi-ws
 version:             0.1.0.0
 synopsis:            Initial project template from stack
 description:         Please see README.md
@@ -21,25 +21,26 @@ library
                      , text
                      , bytestring
                      , websockets
+                     , hanabi-core
   default-language:    Haskell2010
 
-executable hanabi-rest-exe
+executable hanabi-ws
   hs-source-dirs:      app
   main-is:             Main.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
-                     , hanabi-rest
+                     , hanabi-ws
   default-language:    Haskell2010
 
-test-suite hanabi-rest-test
+test-suite hanabi-ws-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
-                     , hanabi-rest
+                     , hanabi-ws
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/hanabi-rest
+  location: https://github.com/TimoFreiberg/hanabi-ws
