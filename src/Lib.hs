@@ -4,12 +4,12 @@
 module Lib where
 
 import Data.Text (Text)
-import Data.Aeson (ToJSON, FromJSON, encode, decode)
+import Data.Aeson (ToJSON, FromJSON)
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Types as Aeson
 import GHC.Generics (Generic)
 import Data.List (isPrefixOf)
-import Hanabi.Types
+import Hanabi
 
 data Request
   = ConnectionRequest Text
@@ -39,15 +39,6 @@ data Error =
   Error
   deriving (Show, Generic)
 
-instance ToJSON Number
-
-instance ToJSON Color
-
-instance ToJSON Hint
-
-instance ToJSON Card where
-  toEncoding = Aeson.genericToEncoding requestOptions
-
 instance ToJSON Request where
   toEncoding = Aeson.genericToEncoding requestOptions
 
@@ -57,15 +48,6 @@ instance ToJSON Score
 
 instance ToJSON Response where
   toEncoding = Aeson.genericToEncoding responseOptions
-
-instance FromJSON Number
-
-instance FromJSON Color
-
-instance FromJSON Hint
-
-instance FromJSON Card where
-  parseJSON = Aeson.genericParseJSON requestOptions
 
 instance FromJSON Request where
   parseJSON = Aeson.genericParseJSON requestOptions
@@ -85,6 +67,7 @@ requestOptions =
   , Aeson.sumEncoding = encoding "req_type"
   }
 
+responseOptions :: Aeson.Options
 responseOptions =
   Aeson.defaultOptions
   { Aeson.fieldLabelModifier = labelMod
